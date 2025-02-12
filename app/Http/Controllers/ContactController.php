@@ -14,27 +14,18 @@ class ContactController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validated = $request->validate([
             'name' => ['required'],
             'email' => ['required', 'email'],
-            'message' => ['required', 'max:2', 'email'],
+            'message' => ['required'],
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
         try {
-            defer(function () {
-                Mail::to('mehedi.mh50@gmail.com')->send(new ContactMail());
-            });
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Your message has been sent successfully.'
-            ], 200);
+            $data = $validated;
+            Mail::to('mehedi.mh50@gmail.com')->send(new ContactMail($data));
+            return back()->with('message', 'Your message has been sent successfully');
         } catch (\Throwable $th) {
-            //throw $th;
+            return back()->with('error', 'Error sending message! Please try again');
         }
     }
 }
