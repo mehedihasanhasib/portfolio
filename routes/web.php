@@ -3,6 +3,7 @@
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Models\Project;
+use App\Models\Skill;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -17,4 +18,19 @@ Route::post('/contact-form-submit', ContactController::class)->name('contact.for
 //     $project->save();
 
 //     return $project;
+// });
+
+// Route::get('/skills-add', function () {
+//     $skills = new Skill();
+
+//     $skills->title = "Database";
+//     $skills->banner = 'lotties/database.json';
+//     $skills->technologies = [
+//         'MySQL' => 'icons/mysql2.png',
+//         'Database Design' => 'icons/data-management.png',
+//         'Query Optimization' => 'icons/database-2.png',
+//     ];
+//     $skills->save();
+
+//     return $skills;
 // });
